@@ -9,7 +9,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql
+      - pgdata:/var/lib/postgresql/data
+    tmpfs:
+      - /var/lib/postgresql
 
   pgadmin:
     image: dpage/pgadmin4
@@ -21,6 +23,9 @@ services:
       - "8081:80"
     depends_on:
       - db
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
 
 volumes:
   pgdata:
+  pgadmin_data:
