@@ -16,8 +16,8 @@ public class CurrentCompanyService {
     private final ObjectFactory<CurrentCompanyHolder> holderFactory;
 
     public CurrentCompanyService(CompanyRepository companyRepository,
-                                 UserCompanyService userCompanyService,
-                                 ObjectFactory<CurrentCompanyHolder> holderFactory) {
+            UserCompanyService userCompanyService,
+            ObjectFactory<CurrentCompanyHolder> holderFactory) {
         this.companyRepository = companyRepository;
         this.userCompanyService = userCompanyService;
         this.holderFactory = holderFactory;
@@ -65,11 +65,12 @@ public class CurrentCompanyService {
 
     @Transactional(readOnly = true)
     public boolean ensureAutoSelectionIfSingle(long userId) throws SQLException {
-        if (holder().isSelected()) return false;
+        if (holder().isSelected())
+            return false;
 
         var choices = userCompanyService.companyChoicesFor(userId);
         if (choices.size() == 1) {
-            selectCompanyForUser(userId, choices.getFirst().id);
+            selectCompanyForUser(userId, choices.get(0).id);
             return true;
         }
         return false;

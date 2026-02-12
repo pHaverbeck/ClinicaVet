@@ -47,15 +47,15 @@ public class AttendanceView extends Main implements BeforeEnterObserver {
     private List<Pet> cachedPets = Collections.emptyList();
 
     public AttendanceView(PetService petService,
-                          AttendanceService attendanceService,
-                          CurrentUserService currentUserService,
-                          CurrentCompanyService currentCompanyService) {
+            AttendanceService attendanceService,
+            CurrentUserService currentUserService,
+            CurrentCompanyService currentCompanyService) {
         this.petService = petService;
         this.attendanceService = attendanceService;
         this.currentUserService = currentUserService;
         this.currentCompanyService = currentCompanyService;
 
-        appointmentAtPicker.setLocale(new Locale("pt", "BR"));
+        appointmentAtPicker.setLocale(Locale.of("pt", "BR"));
 
         add(new ViewToolbar("Atendimento"));
 
@@ -144,7 +144,7 @@ public class AttendanceView extends Main implements BeforeEnterObserver {
             var petList = params.get("pet");
             if (petList != null && !petList.isEmpty()) {
                 try {
-                    preselectedPetId = Long.parseLong(petList.getFirst());
+                    preselectedPetId = Long.parseLong(petList.get(0));
                 } catch (NumberFormatException ignore) {
                     preselectedPetId = null;
                 }
@@ -183,8 +183,7 @@ public class AttendanceView extends Main implements BeforeEnterObserver {
             Notification.show(
                     "Nenhum pet encontrado. Cadastre um pet antes de criar um atendimento.",
                     5000,
-                    Notification.Position.MIDDLE
-            ).addThemeNames("warning");
+                    Notification.Position.MIDDLE).addThemeNames("warning");
         }
     }
 
@@ -261,7 +260,9 @@ public class AttendanceView extends Main implements BeforeEnterObserver {
                     .addThemeNames("error");
         } catch (Exception ex) {
             ex.printStackTrace();
-            Notification.show("Erro inesperado ao salvar atendimento: " + ex.getMessage(), 5000, Notification.Position.MIDDLE)
+            Notification
+                    .show("Erro inesperado ao salvar atendimento: " + ex.getMessage(), 5000,
+                            Notification.Position.MIDDLE)
                     .addThemeNames("error");
         }
     }

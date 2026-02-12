@@ -32,10 +32,10 @@ public class CompanySelectView extends VerticalLayout implements BeforeEnterObse
     private final Grid<CompanyChoice> grid = new Grid<>(CompanyChoice.class, false);
     private final Button confirmBtn = new Button("Usar empresa");
     private final Button refreshBtn = new Button("Atualizar lista");
-    private final Button createBtn  = new Button("Criar empresa");
+    private final Button createBtn = new Button("Criar empresa");
 
     public CompanySelectView(CurrentUserService currentUserService,
-                             CurrentCompanyService currentCompanyService) {
+            CurrentCompanyService currentCompanyService) {
         this.currentUserService = currentUserService;
         this.currentCompanyService = currentCompanyService;
 
@@ -63,9 +63,7 @@ public class CompanySelectView extends VerticalLayout implements BeforeEnterObse
         confirmBtn.setEnabled(false);
         confirmBtn.addClickListener(e -> onConfirm());
 
-        grid.asSingleSelect().addValueChangeListener(e ->
-                confirmBtn.setEnabled(e.getValue() != null)
-        );
+        grid.asSingleSelect().addValueChangeListener(e -> confirmBtn.setEnabled(e.getValue() != null));
 
         refreshBtn.addClickListener(e -> {
             try {
@@ -85,8 +83,7 @@ public class CompanySelectView extends VerticalLayout implements BeforeEnterObse
                 title,
                 new Paragraph("Selecione uma empresa e clique em “Usar empresa”."),
                 grid,
-                actions
-        );
+                actions);
     }
 
     @Override
@@ -129,15 +126,14 @@ public class CompanySelectView extends VerticalLayout implements BeforeEnterObse
             Notification.show(
                     "Você ainda não possui empresas. Crie uma para continuar.",
                     3000,
-                    Notification.Position.BOTTOM_CENTER
-            );
+                    Notification.Position.BOTTOM_CENTER);
             confirmBtn.setEnabled(false);
             createBtn.focus();
             return;
         }
 
         if (items.size() == 1) {
-            grid.select(items.getFirst());
+            grid.select(items.get(0));
         } else {
             grid.focus();
         }

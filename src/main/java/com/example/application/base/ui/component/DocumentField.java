@@ -47,7 +47,7 @@ public class DocumentField extends CustomField<String> {
             String raw = e.getValue();
             String digits = raw == null ? "" : raw.replaceAll("\\D", "");
             String formatted = formatDocument(type, digits);
-            if (!raw.equals(formatted)) {
+            if (formatted != null && !formatted.equals(raw)) {
                 documentField.setValue(formatted);
             }
         });
@@ -55,17 +55,25 @@ public class DocumentField extends CustomField<String> {
 
     private String formatDocument(String type, String digits) {
         if ("CPF".equals(type)) {
-            if (digits.length() > 11) digits = digits.substring(0, 11);
-            if (digits.length() <= 3) return digits;
-            if (digits.length() <= 6) return digits.replaceFirst("(\\d{3})(\\d+)", "$1.$2");
-            if (digits.length() <= 9) return digits.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "$1.$2.$3");
+            if (digits.length() > 11)
+                digits = digits.substring(0, 11);
+            if (digits.length() <= 3)
+                return digits;
+            if (digits.length() <= 6)
+                return digits.replaceFirst("(\\d{3})(\\d+)", "$1.$2");
+            if (digits.length() <= 9)
+                return digits.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "$1.$2.$3");
             return digits.replaceFirst("(\\d{3})(\\d{3})(\\d{3})(\\d{0,2})", "$1.$2.$3-$4").replaceAll("-$", "");
         }
         if ("CNPJ".equals(type)) {
-            if (digits.length() > 14) digits = digits.substring(0, 14);
-            if (digits.length() <= 2) return digits;
-            if (digits.length() <= 5) return digits.replaceFirst("(\\d{2})(\\d+)", "$1.$2");
-            if (digits.length() <= 8) return digits.replaceFirst("(\\d{2})(\\d{3})(\\d+)", "$1.$2.$3");
+            if (digits.length() > 14)
+                digits = digits.substring(0, 14);
+            if (digits.length() <= 2)
+                return digits;
+            if (digits.length() <= 5)
+                return digits.replaceFirst("(\\d{2})(\\d+)", "$1.$2");
+            if (digits.length() <= 8)
+                return digits.replaceFirst("(\\d{2})(\\d{3})(\\d+)", "$1.$2.$3");
             if (digits.length() <= 12)
                 return digits.replaceFirst("(\\d{2})(\\d{3})(\\d{3})(\\d+)", "$1.$2.$3/$4");
             return digits.replaceFirst("(\\d{2})(\\d{3})(\\d{3})(\\d{4})(\\d{0,2})",
@@ -76,7 +84,6 @@ public class DocumentField extends CustomField<String> {
         }
         return digits;
     }
-
 
     @Override
     protected String generateModelValue() {
