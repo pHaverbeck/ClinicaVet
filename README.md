@@ -87,3 +87,26 @@ Importante: Sempre usar hash (ex.: BCrypt) para ambos os campos; nunca armazenar
 • Clients: impedir duplicidade (company_id, doc_type, document).
 • Atendimento: para “agendar”, exigir scheduled_at; para “realizar”, exigir appointment_at.
 ```
+
+## ✅ Checklist de Melhorias (Code Review)
+
+### 🔴 Segurança (Crítico)
+- [x] 1. Remover credenciais do Gmail do `application.properties`
+- [x] 2. Configurar `.env` para credenciais seguras (Gmail + banco)
+- [x] 3. Limpar `pgdata/` do repositório e simplificar `.gitignore`
+- [ ] 4. Corrigir bug do `streetField` na `ClientView.java` (linha 342)
+
+### 🟠 Arquitetura (Moderado)
+- [ ] 5. Fazer `Client`, `Pet`, `Attendance`, `Company` estenderem `AbstractEntity`
+- [ ] 6. Implementar validações no `ClientService.validate()`
+- [ ] 7. Corrigir NPE potencial no `AppUser.equals()/hashCode()`
+- [ ] 8. Corrigir `@Transactional` (não funciona com JDBC puro)
+- [ ] 9. Atualizar para versões estáveis (Spring Boot + Vaadin)
+- [ ] 10. Criar testes unitários
+
+### 🟡 Melhorias
+- [ ] 11. Corrigir conflito `volumes`/`tmpfs` no `docker-compose.yml`
+- [ ] 12. Filtrar `listAll()` por empresa no `AppUserService`
+- [ ] 13. Implementar soft delete no `AppUser`
+- [ ] 14. Substituir `ex.printStackTrace()` por logger
+- [ ] 15. Adicionar ConfigMap/Secret no Kubernetes
