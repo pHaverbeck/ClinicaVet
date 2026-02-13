@@ -339,7 +339,6 @@ public class ClientView extends Main implements BeforeEnterObserver {
         ufField.setValue(nonNull(client.getUf()));
         cityField.setValue(nonNull(client.getCity()));
         districtField.setValue(nonNull(client.getDistrict()));
-        streetField.setValue(nonNull(client.getDistrict()));
         streetField.setValue(nonNull(client.getStreet()));
         numberField.setValue(nonNull(client.getNumber()));
         complementField.setValue(nonNull(client.getComplement()));
